@@ -18,10 +18,10 @@
 - Comprar
 - Listar dados (A-Z / Z-A / Low-High / High-Low)
 
-> **Usuário Padrão (standard_user)**
->  Realiza todas as funcionalidades de forma correta
+> **Usuário Padrão (standard_user)**\
+> Realiza todas as funcionalidades de forma correta
 
-> **Usuário Bloqueado (locked_out_user)**
+> **Usuário Bloqueado (locked_out_user)**\
 >  Não consegue entrar na aplicação
 
 > **Usuário com Problema (problem_user)**
