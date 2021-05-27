@@ -22,7 +22,7 @@ def login(username, password): # Realiza o login no site
     end = time.time()
 
     if end - start > 0.5:
-        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE AO REALIZAR O LOGIN")
+        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE AO REALIZAR O LOGIN")
 
 def validate_login(): # Valida o login no site
     try:
@@ -61,7 +61,7 @@ def list_products(): # Realiza a listagem dos produtos
         html = newHtml
     end = time.time()
     if end - start > 0.5:
-        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA LISTAR OS PRODUTOS")
+        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA LISTAR OS PRODUTOS")
 
 def check_products(): # Checa se os produtos estão sendo redirecionados para a página certa
     start = time.time()
@@ -87,7 +87,7 @@ def check_products(): # Checa se os produtos estão sendo redirecionados para a 
         driver.find_element_by_xpath("//*[@id=\"back-to-products\"]").click() # Volta para a tela inicial
     end = time.time()
     if end - start > 1.2:
-        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA CHECAR PRODUTOS")
+        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA CHECAR PRODUTOS")
 
 def add_remove(): # Checa se o botão adicionar/remover está funcionando
     start = time.time()
@@ -106,7 +106,7 @@ def add_remove(): # Checa se o botão adicionar/remover está funcionando
             print("\033[1;31;48m ITEM ADICIONADO ERRADO")
     end = time.time()
     if end - start > 0.6:
-        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA ADICIONAR/REMOVER DO CARRINHO")
+        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA ADICIONAR/REMOVER DO CARRINHO")
 
 def cart(): # Realiza a compra do produto
     start = time.time()
@@ -139,4 +139,4 @@ def cart(): # Realiza a compra do produto
         print("\033[1;31;48m ERRO AO PREENCHER CAMPOS DA COMPRA --> ", error)
     end = time.time()
     if end - start > 0.6:
-        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE AO REALIZAR A COMPRA")
+        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE AO REALIZAR A COMPRA")
