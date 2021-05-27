@@ -2,18 +2,27 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
-
-from main import driver
-
 import time
 
+option = Options()
+option.headless = False
+driver = webdriver.Chrome(executable_path=('chromedriver.exe'),options=option)
+driver.get("https://www.saucedemo.com/")
+html = driver.page_source
+
+
 def login(username, password): # Realiza o login no site
+    start = time.time()
     try:
         driver.find_element_by_xpath("//*[@id=\"user-name\"]").send_keys(username) # Digita username
         driver.find_element_by_xpath("//*[@id=\"password\"]").send_keys(password) # Digita senha
         driver.find_element_by_xpath("//*[@id=\"login-button\"]").click() # Clica pra login
     except Exception:
         print("\033[1;31;48m Tentativa falha de preencher campos de login")
+    end = time.time()
+
+    if end - start > 0.5:
+        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE AO REALIZAR O LOGIN")
 
 def validate_login(): # Valida o login no site
     try:
@@ -37,6 +46,7 @@ def check_images(): # Checa imagem do produto
         print("\033[1;32;48m Todas as imagens estão certas")
 
 def list_products(): # Realiza a listagem dos produtos
+    start = time.time()
     html = driver.page_source
     options = ["za", "az", "lohi", "hilo"] # Define as opções do DropDown
     for option in options:
@@ -49,8 +59,12 @@ def list_products(): # Realiza a listagem dos produtos
         else:
             print("\033[1;32;48m Listagem ", option.upper() ," realizada") # Se o código mudar, a listagem funcionou
         html = newHtml
+    end = time.time()
+    if end - start > 0.5:
+        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA LISTAR OS PRODUTOS")
 
 def check_products(): # Checa se os produtos estão sendo redirecionados para a página certa
+    start = time.time()
     products = ["item_0_title_link","item_1_title_link","item_2_title_link","item_3_title_link","item_4_title_link","item_5_title_link"]
     for product in products:
         product_main = driver.find_element_by_id(product).find_element_by_class_name("inventory_item_name").text # Pega o nome do produto na pagina inicial
@@ -71,8 +85,12 @@ def check_products(): # Checa se os produtos estão sendo redirecionados para a 
             print("\033[1;32;48m Preço correto") # Se não tiver, o preço está certo
         
         driver.find_element_by_xpath("//*[@id=\"back-to-products\"]").click() # Volta para a tela inicial
+    end = time.time()
+    if end - start > 1.2:
+        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA CHECAR PRODUTOS")
 
 def add_remove(): # Checa se o botão adicionar/remover está funcionando
+    start = time.time()
     add_buttons = ["add-to-cart-sauce-labs-backpack", "add-to-cart-sauce-labs-bike-light","add-to-cart-sauce-labs-bolt-t-shirt","add-to-cart-sauce-labs-fleece-jacket","add-to-cart-sauce-labs-onesie","add-to-cart-test.allthethings()-t-shirt-(red)"]
     remove_buttons = ["remove-sauce-labs-backpack", "remove-sauce-labs-bike-light","remove-sauce-labs-bolt-t-shirt","remove-sauce-labs-fleece-jacket","remove-sauce-labs-onesie","remove-test.allthethings()-t-shirt-(red)"]
 
@@ -85,9 +103,14 @@ def add_remove(): # Checa se o botão adicionar/remover está funcionando
             except Exception:
                 print("\033[1;31;48m ERRO AO ADICIONAR/REMOVER DO CARRINHO") # Se não remover, ocorreu uma falha
         except Exception:
-            print("ITEM ADICIONADO ERRADO")
+            print("\033[1;31;48m ITEM ADICIONADO ERRADO")
+    end = time.time()
+    if end - start > 0.6:
+        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA ADICIONAR/REMOVER DO CARRINHO")
 
-def cart():
+def cart(): # Realiza a compra do produto
+    start = time.time()
+
     driver.find_element_by_xpath("//*[@id=\"shopping_cart_container\"]/a").click() # Abre o carrinho
     driver.find_element_by_xpath("//*[@id=\"checkout\"]").click() # Clica para comprar
 
@@ -114,3 +137,6 @@ def cart():
         driver.find_element_by_xpath("//*[@id=\"continue\"]").click()  
         error = driver.find_element_by_xpath("//*[@id=\"checkout_info_container\"]/div/form/div[1]/div[4]/h3").text # Clica em continuar a compra para capturar o erro (e o campo está vazio)
         print("\033[1;31;48m ERRO AO PREENCHER CAMPOS DA COMPRA --> ", error)
+    end = time.time()
+    if end - start > 0.6:
+        print("\033[1;31;48m USUÁRIO COM PROBLEMA DE PERFORMANCE AO REALIZAR A COMPRA")
