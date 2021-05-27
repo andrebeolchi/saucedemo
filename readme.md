@@ -34,3 +34,4 @@
 > 7. Não consegue realizar a compra (Last Name altera o campo de First Name)
 
 > **Usuário com Falha (performance_glitch_user)**
+> Realiza todas as funções, com tempo muito maior de execução
