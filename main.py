@@ -1,6 +1,6 @@
 from func import *
 
-username = ["standard_user", "problem_user", "not_valid_user", "locked_out_user", "performance_glitch_user"]
+username = ["standard_user", "problem_user", "invalid_user", "locked_out_user", "performance_glitch_user"]
 password = "secret_sauce"
 
 for user in username:
