@@ -19,9 +19,9 @@ def userPrint(user):
         print("\033[1;37;48m╔═════════════════════════════════════════════════╗\033[0m") # Perfumaria
         print("\033[1;37;48m║                USUÁRIO: PROBLEM_USER            ║") # Perfumaria
         print("\033[1;37;48m╟═════════════════════════════════════════════════╣\033[0m") # Perfumaria
-    elif user == "not_valid_user":
+    elif user == "invalid_user":
         print("\033[1;37;48m╔═════════════════════════════════════════════════╗\033[0m") # Perfumaria
-        print("\033[1;37;48m║               USUÁRIO: NOT_VALID_USER           ║") # Perfumaria
+        print("\033[1;37;48m║                USUÁRIO: INVALID_USER            ║") # Perfumaria
         print("\033[1;37;48m╟═════════════════════════════════════════════════╣\033[0m") # Perfumaria
     elif user == "locked_out_user":
         print("\033[1;37;48m╔═════════════════════════════════════════════════╗\033[0m") # Perfumaria
