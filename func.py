@@ -5,11 +5,32 @@ from selenium.webdriver.support.ui import Select
 import time
 
 option = Options()
-option.headless = False
+option.headless = False # True = Segundo Plano, False = Executa na tela
 driver = webdriver.Chrome(executable_path=('chromedriver.exe'),options=option)
 driver.get("https://www.saucedemo.com/")
 html = driver.page_source
 
+def userPrint(user):
+    if user == "standard_user":
+        print("\033[1;37;48m╔═════════════════════════════════════════════════╗\033[0m") # Perfumaria
+        print("\033[1;37;48m║                USUÁRIO: STANDART_USER           ║") # Perfumaria
+        print("\033[1;37;48m╟═════════════════════════════════════════════════╣\033[0m") # Perfumaria
+    elif user == "problem_user":
+        print("\033[1;37;48m╔═════════════════════════════════════════════════╗\033[0m") # Perfumaria
+        print("\033[1;37;48m║                USUÁRIO: PROBLEM_USER            ║") # Perfumaria
+        print("\033[1;37;48m╟═════════════════════════════════════════════════╣\033[0m") # Perfumaria
+    elif user == "not_valid_user":
+        print("\033[1;37;48m╔═════════════════════════════════════════════════╗\033[0m") # Perfumaria
+        print("\033[1;37;48m║               USUÁRIO: NOT_VALID_USER           ║") # Perfumaria
+        print("\033[1;37;48m╟═════════════════════════════════════════════════╣\033[0m") # Perfumaria
+    elif user == "locked_out_user":
+        print("\033[1;37;48m╔═════════════════════════════════════════════════╗\033[0m") # Perfumaria
+        print("\033[1;37;48m║              USUÁRIO: LOCKED_OUT_USER           ║") # Perfumaria
+        print("\033[1;37;48m╟═════════════════════════════════════════════════╣\033[0m") # Perfumaria
+    else:
+        print("\033[1;37;48m╔═════════════════════════════════════════════════╗\033[0m") # Perfumaria
+        print("\033[1;37;48m║          USUÁRIO: PERFORMANCE_GLITCH_USER       ║") # Perfumaria
+        print("\033[1;37;48m╟═════════════════════════════════════════════════╣\033[0m") # Perfumaria
 
 def login(username, password): # Realiza o login no site
     start = time.time()
@@ -18,32 +39,40 @@ def login(username, password): # Realiza o login no site
         driver.find_element_by_xpath("//*[@id=\"password\"]").send_keys(password) # Digita senha
         driver.find_element_by_xpath("//*[@id=\"login-button\"]").click() # Clica pra login
     except Exception:
-        print("\033[1;31;48m Tentativa falha de preencher campos de login")
+        print("\033[1;31;48m╟═════════════════════════════════════════════════╣\033[0m") # Perfumaria
+        print("\033[1;31;48m║   Tentativa falha de preencher campos de login  ║\033[0m") # Perfumaria
+        print("\033[1;31;48m╚═════════════════════════════════════════════════╝\033[0m") # Perfumaria
     end = time.time()
 
     if end - start > 0.5:
-        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE AO REALIZAR O LOGIN")
+        print("\033[1;33;48m║   PROBLEMA DE PERFORMANCE AO REALIZAR O LOGIN   ║\033[0m") # Perfumaria
 
 def validate_login(): # Valida o login no site
     try:
         error = driver.find_element_by_xpath("//*[@id=\"login_button_container\"]/div/form/div[3]/h3") # Salva o campo de erro da página
         if "locked out" in error.text: # Se encontrar 'locked out' no campo de erro, reconhece usuário bloqueado
-            print("\033[1;31;48m Usuário bloqueado")
+            
+            print("\033[1;31;48m║               USUÁRIO BLOQUEADO                 ║\033[0m") # Perfumaria
+            print("\033[1;31;48m╚═════════════════════════════════════════════════╝\033[0m") # Perfumaria
+
             user_logged = False
         elif "not match any user" in error.text: # Se encontrar 'not match...', reconhece que o username/senha está errado
-            print("\033[1;31;48m Usuário/Senha errado")
+
+            print("\033[1;31;48m║               USUÁRIO/SENHA ERRADO              ║\033[0m") # Perfumaria
+            print("\033[1;31;48m╚═════════════════════════════════════════════════╝\033[0m") # Perfumaria
+
             user_logged = False
     except Exception:
-        print("\033[1;32;48m Nenhum erro durante o login encontrado") # Se não encontrar o campo de erro da página, reconhece que foi realizado com sucesso o login no site
+        print("\033[1;32;48m║      Nenhum erro durante o login encontrado     ║\033[0m") # # Se não encontrar o campo de erro da página, reconhece que foi realizado com sucesso o login no site
         user_logged = True
     return user_logged
 
 def check_images(): # Checa imagem do produto
     html = driver.page_source # Salva o html novamente
     if "sl-404.168b1cce.jpg" in html: # Procura se a imagem do cachorro está na página
-        print("\033[1;31;48m IMAGEM ERRADA ENCONTRADA")
+        print("\033[1;31;48m║             IMAGEM ERRADA ENCONTRADA            ║")
     else:
-        print("\033[1;32;48m Todas as imagens estão certas")
+        print("\033[1;32;48m║           Todas as imagens estão certas         ║")
 
 def list_products(): # Realiza a listagem dos produtos
     start = time.time()
@@ -55,13 +84,13 @@ def list_products(): # Realiza a listagem dos produtos
         newHtml = driver.page_source
 
         if  newHtml == html:
-            print("\033[1;31;48m LISTAGEM ", option.upper() ," NÃO REALIZADA") # Caso selecione uma opção diferente de 'az', o código deverá mudar
+            print("\033[1;31;48m║              LISTAGEM  NÃO REALIZADA            ║ >> ", option.upper()) # Caso selecione uma opção diferente de 'az', o código deverá mudar
         else:
-            print("\033[1;32;48m Listagem ", option.upper() ," realizada") # Se o código mudar, a listagem funcionou
+            print("\033[1;32;48m║                 Listagem realizada              ║ >> ", option.upper()) # Se o código mudar, a listagem funcionou
         html = newHtml
     end = time.time()
     if end - start > 0.5:
-        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA LISTAR OS PRODUTOS")
+        print("\033[1;33;48m║ PROBLEMA DE PERFORMANCE PARA LISTAR OS PRODUTOS ║\033[0m") # Perfumaria
 
 def check_products(): # Checa se os produtos estão sendo redirecionados para a página certa
     start = time.time()
@@ -71,23 +100,26 @@ def check_products(): # Checa se os produtos estão sendo redirecionados para a 
         driver.find_element_by_id(product).click() # Clica no produto
         product_new = driver.find_element_by_xpath("//*[@id=\"inventory_item_container\"]/div/div/div[2]/div[1]").text # Pega o nome do produto na pagina do produto
         if product_new == product_main: # Verifica se o nome do produto da pagina inicial é igual a da pagina do produto
-            print("\033[1;32;48m Sucesso no redirecionamento")
+
+            print("\033[1;32;48m║           Sucesso no redirecionamento           ║")
+
         elif "NOT FOUND" in product_new: # Verifica se o nome do produto não foi encontrado
-            print("\033[1;31;48m ITEM NÃO ENCONTRADO -->", product_main.upper()) 
+            print("\033[1;31;48m║                ITEM NÃO ENCONTRADO              ║ >>", product_main.upper()) 
+
         else:
-            print("\033[1;31;48m FALHA NO REDIRECIONAMENTO DO PRODUTO: ", product_main.upper()) # Se os nomes não forem iguais ocorreu uma falha no redirecionamento
+            print("\033[1;31;48m║      FALHA NO REDIRECIONAMENTO DO PRODUTO       ║ >>", product_main.upper()) # Se os nomes não forem iguais ocorreu uma falha no redirecionamento
         
         price = driver.find_element_by_xpath("//*[@id=\"inventory_item_container\"]/div/div/div[2]/div[3]").text # Pega o preço do produto
 
         if "-" in price: # Verifica se o produto tem valor negativo
-            print("\033[1;31;48m PREÇO DO PRODUTO ERRADO") # Se tiver, o preço está errado
+            print("\033[1;31;48m║              PREÇO DO PRODUTO ERRADO            ║") # Se tiver, o preço está errado
         else:
-            print("\033[1;32;48m Preço correto") # Se não tiver, o preço está certo
+            print("\033[1;32;48m║                   Preço correto                 ║") # Se não tiver, o preço está certo
         
         driver.find_element_by_xpath("//*[@id=\"back-to-products\"]").click() # Volta para a tela inicial
     end = time.time()
     if end - start > 1.2:
-        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA CHECAR PRODUTOS")
+        print("\033[1;33;48m║  PROBLEMA DE PERFORMANCE PARA CHECAR PRODUTOS   ║ \033[0m") # Perfumaria
 
 def add_remove(): # Checa se o botão adicionar/remover está funcionando
     start = time.time()
@@ -99,14 +131,14 @@ def add_remove(): # Checa se o botão adicionar/remover está funcionando
             driver.find_element_by_id(add_buttons[x]).click() # Adiciona ao carrinho
             try: # Tenta remover
                 driver.find_element_by_id(remove_buttons[x]).click() # Remove do carrinho
-                print("\033[1;32;48m Adicionar/Remover ao carrinho com sucesso")
+                print("\033[1;32;48m║    Adicionar/Remover ao carrinho com sucesso    ║")
             except Exception:
-                print("\033[1;31;48m ERRO AO ADICIONAR/REMOVER DO CARRINHO") # Se não remover, ocorreu uma falha
+                print("\033[1;31;48m║      ERRO AO ADICIONAR/REMOVER DO CARRINHO      ║") # Se não remover, ocorreu uma falha
         except Exception:
-            print("\033[1;31;48m ITEM ADICIONADO ERRADO")
+            print("\033[1;31;48m║              ITEM ADICIONADO ERRADO             ║")
     end = time.time()
     if end - start > 0.6:
-        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE PARA ADICIONAR/REMOVER DO CARRINHO")
+        print("\033[1;33;48m║  PROBLEMA DE PERFORMANCE PARA ADICIONAR/REMOVER ║ \033[0m") # Perfumaria
 
 def cart(): # Realiza a compra do produto
     start = time.time()
@@ -124,19 +156,31 @@ def cart(): # Realiza a compra do produto
     postalcode.send_keys('postal') #Preenche campo de postal code
 
     if firstname.get_attribute("value") == "first" and lastname.get_attribute("value") == "last" and postalcode.get_attribute("value") == "postal": # Se TODOS os campos estiverem preenchidos, clica para comprar
-        driver.find_element_by_xpath("//*[@id=\"continue\"]").click()       
-        print("\033[1;32;48m Sucesso em preencher campos da compra")
+        driver.find_element_by_xpath("//*[@id=\"continue\"]").click()    
+
+        print("\033[1;32;48m║      Sucesso em preencher campos da compra      ║")
 
         driver.find_element_by_xpath("//*[@id=\"finish\"]").click() # Finalizar a compra
 
         if driver.find_element_by_xpath("//*[@id=\"checkout_complete_container\"]/h2").text == "THANK YOU FOR YOUR ORDER": # Se aparecer 'Thank you" a compra foi realizada com sucesso
-            print("\033[1;32;48m Sucesso em realizar a compra")
+            
+            print("\033[1;32;48m║          Sucesso em realizar a compra           ║")
+            print("\033[1;32;48m╚═════════════════════════════════════════════════╝\033[0m") # Perfumaria
+
         else:
-            print("\033[1;31;48m FALHA EM REALIZAR A COMPRA")
+
+
+            print("\033[1;31;48m║            FALHA EM REALIZAR A COMPRA           ║")
+            print("\033[1;31;48m╚═════════════════════════════════════════════════╝\033[0m") # Perfumaria
+
     else: # Se pelo menos um campo estiver em branco
         driver.find_element_by_xpath("//*[@id=\"continue\"]").click()  
         error = driver.find_element_by_xpath("//*[@id=\"checkout_info_container\"]/div/form/div[1]/div[4]/h3").text # Clica em continuar a compra para capturar o erro (e o campo está vazio)
-        print("\033[1;31;48m ERRO AO PREENCHER CAMPOS DA COMPRA --> ", error)
+        
+        print("\033[1;31;48m║        ERRO AO PREENCHER CAMPOS DA COMPRA       ║ >> ", error)
+        print("\033[1;31;48m╚═════════════════════════════════════════════════╝\033[0m") # Perfumaria
+
     end = time.time()
     if end - start > 0.6:
-        print("\033[1;33;48m USUÁRIO COM PROBLEMA DE PERFORMANCE AO REALIZAR A COMPRA")
+        print("\033[1;33;48m║  PROBLEMA DE PERFORMANCE AO REALIZAR A COMPRA   ║\033[0m") # Perfumaria
+        print("\033[1;33;48m╚═════════════════════════════════════════════════╝\033[0m") # Perfumaria
